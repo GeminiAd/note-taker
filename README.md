@@ -34,11 +34,7 @@
 
 ## Technologies Used
 
-- [Inquirer Package](https://www.npmjs.com/package/inquirer)
-- [Jest Test Package](https://jestjs.io/)
 - [node.js](https://nodejs.org/en/)
-- [Bootstrap v5.2.2](https://getbootstrap.com/)
-- [FontAwesome v6 Icons](https://fontawesome.com/)
 - [JavaScript](https://www.javascript.com/)
 
 ## Concepts Demonstrated
