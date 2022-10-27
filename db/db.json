@@ -1,6 +1,14 @@
 [
 	{
-		"title": "TEST",
-		"text": "TEST"
+		"title": "Program",
+		"text": "Work on my homework challenge."
+	},
+	{
+		"title": "Drink beer",
+		"text": "I think a couple of IPAs have my name on it."
+	},
+	{
+		"title": "Pet Cat",
+		"text": "My siamese cat needs some petting."
 	}
 ]
