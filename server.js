@@ -1,6 +1,6 @@
 const express = require("express");
 const fs = require("fs");
-const UID = require("./utils/UID");
+const { v4: uuidv4 } = require('uuid');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -8,11 +8,6 @@ const path = require("path");
 
 /* This list of notes in our application */
 const notes = [];
-
-/* This is just a simple unique ID generator I made for this program. */
-const uid = new UID();
-
-//const notes = require("./db/db.json");
 
 app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
@@ -36,8 +31,6 @@ function readNotes() {
         let rawNotes = JSON.parse(data);
         /* 2. For each note that we parsed: */
         for (const note of rawNotes) {
-            /* 2. a. Give it a unique ID. */
-            note.id = uid.getNextID();
             /* 2. b. Add it to our list of notes. */
             notes.push(note);
         }
@@ -74,7 +67,7 @@ function writeNotes() {
      * The second parameter is the replacer parameter. See: 
      * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#the_replacer_parameter
      */
-    const toWrite = JSON.stringify(notes, ["title", "text"], "\t");
+    const toWrite = JSON.stringify(notes, null, "\t");
     fs.writeFile("./db/db.json", toWrite, "utf8", (err) => {
         if (err) {
             console.log(err);
@@ -107,10 +100,13 @@ app.get('/api/notes', (req, res) =>
 app.post('/api/notes', (req, res) => {
 
     /* 1. Parse out the note */
-    const note = req.body;
+    const { title, text } = req.body;
 
-    /* 2. Create an ID for the note. */
-    note.id = uid.getNextID();
+    const note = {
+        id: uuidv4(),
+        title: title,
+        text: text
+    };
 
     /* 3. Add it to our list of notes. */
     notes.push(note);
@@ -133,11 +129,8 @@ app.post('/api/notes', (req, res) => {
  */
 app.delete('/api/notes/:id', (req, res) => {
 
-    /* 1. Parse out the id from the request. */
-    const id = parseInt(req.params.id);
-
     /* 2. Remove the note from our list of notes. */
-    const note = removeNote(id);
+    const note = removeNote(req.params.id);
 
     /* 3. Write the updated note list to disk. */
     writeNotes();
