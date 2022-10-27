@@ -31,6 +31,18 @@ function readNotes() {
 }
 
 /*
+ *  Removes the note with the id equal to the input parameter from our list of notes.
+ */
+function removeNote(id) {
+    for (let i = 0; i < notes.length; i++) {
+        if (notes[i].id === id) {
+            //console.log("REMOVING NOTE AT INDEX " + i);
+            return notes.splice(i, 1)[0];
+        }
+    }
+}
+
+/*
  *  Writes the list of notes saved in the variable notes to ./db/db.json.
  *  Because the test note in db.json didn't come with an ID, I'm going to try and hide the ID as much as possible as I try to avoid
  *  modifying the starter files too much. Thus, I won't save the IDs of the notes when writing to file and will only generate them when reading from
@@ -60,7 +72,13 @@ app.post('/api/notes', (req, res) => {
     const note = req.body;
     note.id = uid.getNextID();
     notes.push(note);
-    console.log(notes);
+    writeNotes();
+    res.json(note);
+});
+
+app.delete('/api/notes/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    const note = removeNote(id);
     writeNotes();
     res.json(note);
 });
