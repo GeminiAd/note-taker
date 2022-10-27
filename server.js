@@ -1,12 +1,15 @@
 const express = require("express");
 const fs = require("fs");
-const UID = require("./public/assets/js/UID");
+const UID = require("./utils/UID");
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 const path = require("path");
 
+/* This list of notes in our application */
 const notes = [];
+
+/* This is just a simple unique ID generator I made for this program. */
 const uid = new UID();
 
 //const notes = require("./db/db.json");

@@ -1,7 +1,7 @@
 /*
  *  This is just a class for generating a unique ID for notes. I considered using packages like crypto for crypto.randomUUID() or
  *  using the UUID npm package, but that seems like too much for just this simple application. I'm only going to be saving, maybe
- *  100 notes? All I need for a unique ID generator is something that pops out sequential integers starting at 1 or 0, so that is 
+ *  100 notes? All I need for a unique ID generator is something that pops out sequential integers starting at 1 or 0, so that's 
  *  all this class does.
  */
 class UID {
