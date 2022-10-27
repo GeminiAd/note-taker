@@ -30,6 +30,22 @@ function readNotes() {
     });
 }
 
+/*
+ *  Writes the list of notes saved in the variable notes to ./db/db.json.
+ *  Because the test note in db.json didn't come with an ID, I'm going to try and hide the ID as much as possible as I try to avoid
+ *  modifying the starter files too much. Thus, I won't save the IDs of the notes when writing to file and will only generate them when reading from
+ *  db.json or on a post request. The user doesn't need to see the ID anyway.
+ */
+function writeNotes() {
+    const toWrite = JSON.stringify(notes, ["title", "text"], "\t");
+    console.log(toWrite);
+    fs.writeFile("./db/db.json", toWrite, "utf8", (err) => {
+        if (err) {
+            console.log(err);
+        }
+    });
+}
+
 readNotes();
 
 app.get('/notes', (req, res) =>
@@ -45,6 +61,7 @@ app.post('/api/notes', (req, res) => {
     note.id = uid.getNextID();
     notes.push(note);
     console.log(notes);
+    writeNotes();
     res.json(note);
 });
 
