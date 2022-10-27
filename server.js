@@ -22,8 +22,7 @@ app.use(express.static("public"));
  *  In order to read the notes we must:
  *      1. Parse the notes from the file we save it in.
  *      2. For each note that we parsed:
- *          a. Give it a unique ID.
- *          b. Add it to our list of notes.
+ *          a. Add it to our list of notes.
  */
 function readNotes() {
     fs.readFile("./db/db.json", "utf8", (err, data) => {
@@ -31,7 +30,7 @@ function readNotes() {
         let rawNotes = JSON.parse(data);
         /* 2. For each note that we parsed: */
         for (const note of rawNotes) {
-            /* 2. b. Add it to our list of notes. */
+            /* 2. a. Add it to our list of notes. */
             notes.push(note);
         }
     });
@@ -47,7 +46,6 @@ function readNotes() {
 function removeNote(id) {
     for (let i = 0; i < notes.length; i++) {
         if (notes[i].id === id) {
-            //console.log("REMOVING NOTE AT INDEX " + i);
             return notes.splice(i, 1)[0];
         }
     }
@@ -91,17 +89,18 @@ app.get('/api/notes', (req, res) =>
 /*  Defines the POST route to add a new note.
  *  
  *  When /api/notes receives a POST request, we must: 
- *      1. Parse out the note
- *      2. Create an ID for the note.
+ *      1. Parse out the title and text of the note.
+ *      2. Create a new note with a unique id, and the title and text we parsed.
  *      3. Add it to our list of notes.
  *      4. Write the new list of notes to our file of saved notes. 
  *      5. Send the saved note back, as the front-end is expecting that.
  */
 app.post('/api/notes', (req, res) => {
 
-    /* 1. Parse out the note */
+    /* 1. Parse out the title and text of the note. */
     const { title, text } = req.body;
 
+    /* 2. Create a new note with a unique id, and the title and text we parsed. */
     const note = {
         id: uuidv4(),
         title: title,
@@ -128,9 +127,11 @@ app.post('/api/notes', (req, res) => {
  *      4. Send back the deleted note, as the front-end is expecting some sort of response.
  */
 app.delete('/api/notes/:id', (req, res) => {
+    /* 1. Parse out the id from the request. */
+    const id = req.params.id;
 
     /* 2. Remove the note from our list of notes. */
-    const note = removeNote(req.params.id);
+    const note = removeNote(id);
 
     /* 3. Write the updated note list to disk. */
     writeNotes();
