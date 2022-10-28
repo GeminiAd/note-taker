@@ -21,7 +21,7 @@
 
 Welcome to Note Taker '98: we come bundled with Windows '98!
 
-I'm just kidding. I'm poking fun of the fact that the front end is basic, not mobile-responsive, and not created by me. This app breaks on mobile resolutions. *Every* web app I make looks good on *any* device. I can do better than having my web application break on mobile resolution, and I hold myself to a higher standard than that.
+I'm just kidding. I'm poking fun of the fact that the front end is basic, not mobile-responsive, and not created by me. *Every* web app front-end I make looks good on *any* device: this app breaks on mobile resolutions. I can do better than having my web application break on mobile resolution, and I hold myself to a higher standard than that.
 
 With that being said, this is just a simple note taker application, where you can enter a note title and note text, and save it. You can also delete notes. For more specific instructions on how to use the application, see [Usage](#usage).
 
